@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ava Lopez Portfolio</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="wordmark" href="./index.html">Ava Lopez</a>
+        <nav class="topnav" aria-label="Main">
+          <a href="./about.html">About Me</a>
+          <div class="topnav__dropdown">
+            <a class="topnav__toggle" href="#my-work">My Work</a>
+            <div class="topnav__menu">
+              <a href="./collaborative.html">Collaborative Projects</a>
+              <a href="./animations.html">Animations</a>
+              <a href="./posters.html">Posters</a>
+              <a href="./other.html">Other</a>
+            </div>
+          </div>
+          <a href="./contact.html">Contact Me</a>
+        </nav>
+      </header>
+
+      <main class="home">
+        <section class="home-hero">
+          <div class="home-hero__portrait">
+            <img
+              src="./assets/source/portfolio-photo.png"
+              alt="Portrait of Ava Lopez"
+            />
+          </div>
+
+          <div class="home-hero__copy">
+            <div class="home-hero__heading">
+              <p class="eyebrow js-type-line">Portfolio</p>
+              <h1 class="bitmap js-type-line">Ava Lopez</h1>
+            </div>
+            <ul class="home-hero__facts">
+              <li class="js-type-line">Creative Strategist</li>
+              <li class="js-type-line">Parsons Strategic Design and Management</li>
+              <li class="js-type-line">Expected Graduation December 2026</li>
+              <li class="js-type-line">Based in NYC</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="contents-grid" id="my-work" aria-label="Portfolio sections">
+          <a class="contents-card contents-card--about" href="./about.html">
+            <span class="contents-card__index">01</span>
+            <h2 class="bitmap">About</h2>
+            <p>Creative resume, school background, and profile.</p>
+          </a>
+
+          <a
+            class="contents-card contents-card--collaborative"
+            href="./collaborative.html"
+          >
+            <span class="contents-card__index">02</span>
+            <h2 class="bitmap">Collaborative Projects</h2>
+            <p>Research, concept work, and team-based projects.</p>
+          </a>
+
+          <a class="contents-card contents-card--animations" href="./animations.html">
+            <span class="contents-card__index">03</span>
+            <h2 class="bitmap">Animations</h2>
+            <p>Motion pieces, narrative studies, and visual experiments.</p>
+          </a>
+
+          <a class="contents-card contents-card--posters" href="./posters.html">
+            <span class="contents-card__index">04</span>
+            <h2 class="bitmap">Posters</h2>
+            <p>Editorial, strategic, and systems-focused presentation work.</p>
+          </a>
+
+          <a class="contents-card contents-card--other" href="./other.html">
+            <span class="contents-card__index">05</span>
+            <h2 class="bitmap">Other</h2>
+            <p>Reserved space for new work and portfolio additions.</p>
+          </a>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const sleep = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
+      const typeLine = async (element, text, speed) => {
+        element.textContent = "";
+        element.classList.add("is-hidden-before-type");
+        element.classList.add("is-typing");
+        element.classList.remove("is-hidden-before-type");
+
+        for (const character of text) {
+          element.textContent += character;
+          await sleep(speed);
+        }
+
+        element.classList.remove("is-typing");
+      };
+
+      window.addEventListener("DOMContentLoaded", async () => {
+        const lines = Array.from(document.querySelectorAll(".js-type-line"));
+
+        lines.forEach((line) => {
+          line.classList.add("is-hidden-before-type");
+        });
+
+        for (const line of lines) {
+          const originalText = line.textContent;
+          await typeLine(line, originalText, line.tagName === "H1" ? 72 : 42);
+          await sleep(260);
+        }
+      });
+    </script>
+  </body>
+</html>

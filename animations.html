@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animations | Ava Lopez</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="wordmark" href="./index.html">Ava Lopez</a>
+        <nav class="topnav" aria-label="Main">
+          <a href="./about.html">About Me</a>
+          <div class="topnav__dropdown is-active">
+            <a class="topnav__toggle" href="./index.html#my-work">My Work</a>
+            <div class="topnav__menu">
+              <a href="./collaborative.html">Collaborative Projects</a>
+              <a class="is-active" href="./animations.html">Animations</a>
+              <a href="./posters.html">Posters</a>
+              <a href="./other.html">Other</a>
+            </div>
+          </div>
+          <a href="./contact.html">Contact Me</a>
+        </nav>
+      </header>
+
+      <main class="section-page">
+        <section class="section-hero">
+          <p class="eyebrow">Animations</p>
+          <h1 class="bitmap">Motion Work</h1>
+          <p class="lede">
+            Short animation studies focused on rhythm, character, and graphic
+            storytelling.
+          </p>
+          <div class="ui-row">
+            <a class="ui-button ui-button--link" href="./index.html">Back</a>
+          </div>
+        </section>
+
+        <section class="cards-grid">
+          <article class="work-card">
+            <div class="work-card__media">
+              <video controls muted playsinline preload="metadata" poster="./assets/source/raccoon-thumbnail.png">
+                <source src="./assets/source/raccoon.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="work-card__body">
+              <p class="eyebrow">Animation</p>
+              <h2>Day in the Life of a Raccoon</h2>
+              <p>
+                A playful animation experiment centered on character and story.
+              </p>
+            </div>
+          </article>
+
+          <article class="work-card">
+            <div class="work-card__media">
+              <video controls muted playsinline preload="metadata" poster="./assets/previews/Day at beach.mp4.png">
+                <source src="./assets/source/beach.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="work-card__body">
+              <p class="eyebrow">Animation</p>
+              <h2>Day at Beach</h2>
+              <p>
+                A stylized motion piece with a more graphic, atmosphere-driven
+                mood.
+              </p>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

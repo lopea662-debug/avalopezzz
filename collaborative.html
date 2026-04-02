@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collaborative Projects | Ava Lopez</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="wordmark" href="./index.html">Ava Lopez</a>
+        <nav class="topnav" aria-label="Main">
+          <a href="./about.html">About Me</a>
+          <div class="topnav__dropdown is-active">
+            <a class="topnav__toggle" href="./index.html#my-work">My Work</a>
+            <div class="topnav__menu">
+              <a class="is-active" href="./collaborative.html">Collaborative Projects</a>
+              <a href="./animations.html">Animations</a>
+              <a href="./posters.html">Posters</a>
+              <a href="./other.html">Other</a>
+            </div>
+          </div>
+          <a href="./contact.html">Contact Me</a>
+        </nav>
+      </header>
+
+      <main class="section-page">
+        <section class="section-hero">
+          <p class="eyebrow">Collaborative Projects</p>
+          <h1 class="bitmap">Collaborative Work</h1>
+          <p class="lede">
+            Team-based research, concept development, and collaborative brand
+            analysis.
+          </p>
+          <div class="ui-row">
+            <a class="ui-button ui-button--link" href="./index.html">Back</a>
+          </div>
+        </section>
+
+        <article class="feature-grid">
+          <a
+            class="feature-grid__image feature-grid__image--wide feature-grid__link"
+            href="./assets/source/interplay.pdf"
+            data-deck-title="Interplay"
+            data-deck-src="./assets/source/interplay.pdf"
+          >
+            <img
+              src="./assets/source/Design Research.key/preview.jpg"
+              alt="Interplay presentation cover"
+            />
+          </a>
+          <div class="feature-grid__copy">
+            <p class="eyebrow">Design Research • Service Concept</p>
+            <h2>Connecting youth to the world of music</h2>
+            <p>
+              Interplay combines research, synthesis, and collaborative concept
+              development to imagine better pathways into musical participation.
+            </p>
+            <button
+              class="button button--plain"
+              type="button"
+              data-deck-title="Interplay"
+              data-deck-src="./assets/source/interplay.pdf"
+            >
+              Widen Deck
+            </button>
+          </div>
+        </article>
+
+        <article class="feature-grid">
+          <a
+            class="feature-grid__image feature-grid__image--wide feature-grid__link"
+            href="./assets/source/kodak-analysis.pdf"
+            data-deck-title="Kodak Analysis"
+            data-deck-src="./assets/source/kodak-analysis.pdf"
+          >
+            <img
+              src="./assets/previews/Milestone 9 (1).pdf.png"
+              alt="Kodak analysis cover"
+            />
+          </a>
+          <div class="feature-grid__copy">
+            <p class="eyebrow">Brand Analysis • Research</p>
+            <h2>Kodak Analysis</h2>
+            <p>
+              A collaborative brand analysis focused on legacy, visual identity,
+              and the relationship between nostalgia and contemporary relevance.
+            </p>
+            <button
+              class="button button--plain"
+              type="button"
+              data-deck-title="Kodak Analysis"
+              data-deck-src="./assets/source/kodak-analysis.pdf"
+            >
+              Widen Deck
+            </button>
+          </div>
+        </article>
+
+        <div class="deck-modal" id="deck-modal" hidden>
+          <div class="deck-modal__backdrop" data-close-deck></div>
+          <div class="deck-modal__panel" role="dialog" aria-modal="true" aria-labelledby="deck-modal-title">
+            <div class="deck-modal__topbar">
+              <p class="eyebrow" id="deck-modal-title">Deck Viewer</p>
+              <button class="ui-button button--plain" type="button" data-close-deck>
+                Close
+              </button>
+            </div>
+            <div class="deck-modal__frame">
+              <iframe
+                id="deck-modal-frame"
+                title="Project deck viewer"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const deckModal = document.getElementById("deck-modal");
+      const deckFrame = document.getElementById("deck-modal-frame");
+      const deckTitle = document.getElementById("deck-modal-title");
+      const deckTriggers = document.querySelectorAll("[data-deck-src]");
+      const deckClosers = document.querySelectorAll("[data-close-deck]");
+
+      const openDeck = (title, src) => {
+        deckTitle.textContent = title;
+        deckFrame.src = src;
+        deckModal.hidden = false;
+        document.body.classList.add("modal-open");
+      };
+
+      const closeDeck = () => {
+        deckModal.hidden = true;
+        deckFrame.removeAttribute("src");
+        document.body.classList.remove("modal-open");
+      };
+
+      deckTriggers.forEach((trigger) => {
+        trigger.addEventListener("click", (event) => {
+          event.preventDefault();
+          openDeck(trigger.dataset.deckTitle || "Deck Viewer", trigger.dataset.deckSrc);
+        });
+      });
+
+      deckClosers.forEach((closer) => {
+        closer.addEventListener("click", closeDeck);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !deckModal.hidden) {
+          closeDeck();
+        }
+      });
+    </script>
+  </body>
+</html>

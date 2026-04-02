@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Me | Ava Lopez</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="wordmark" href="./index.html">Ava Lopez</a>
+        <nav class="topnav" aria-label="Main">
+          <a href="./about.html">About Me</a>
+          <div class="topnav__dropdown">
+            <a class="topnav__toggle" href="./index.html#my-work">My Work</a>
+            <div class="topnav__menu">
+              <a href="./collaborative.html">Collaborative Projects</a>
+              <a href="./animations.html">Animations</a>
+              <a href="./posters.html">Posters</a>
+              <a href="./other.html">Other</a>
+            </div>
+          </div>
+          <a class="is-active" href="./contact.html">Contact Me</a>
+        </nav>
+      </header>
+
+      <main class="section-page">
+        <section class="section-hero">
+          <p class="eyebrow">Contact Me</p>
+          <h1 class="bitmap">Get In Touch</h1>
+          <p class="lede">
+            Reach out for collaborations, internships, freelance opportunities,
+            or project conversations.
+          </p>
+          <div class="ui-row">
+            <a class="ui-button ui-button--link" href="./index.html">Back</a>
+          </div>
+        </section>
+
+        <section class="contact-layout">
+          <article class="info-block">
+            <p class="eyebrow">Direct Contact</p>
+            <h2>Contact Information</h2>
+            <ul class="clean-list clean-list--links">
+              <li><a href="mailto:aval5428@gmail.com">aval5428@gmail.com</a></li>
+              <li>
+                <a href="https://www.linkedin.com/in/avalopezzz/">linkedin.com/in/avalopezzz</a>
+              </li>
+            </ul>
+          </article>
+
+          <article class="info-block">
+            <p class="eyebrow">Message</p>
+            <h2>Send A Note</h2>
+            <form
+              class="contact-form"
+              id="contact-form"
+              action="https://docs.google.com/forms/d/e/1FAIpQLScR2mSiP5lSRiaqWyCzDqbqBSX0QXMlOKSFegseBxFzWFC2PQ/formResponse"
+              method="POST"
+              target="hidden-form-target"
+            >
+              <label class="form-field">
+                <span>Name</span>
+                <input
+                  type="text"
+                  name="entry.286557407"
+                  placeholder="Your name"
+                  required
+                />
+              </label>
+
+              <label class="form-field">
+                <span>Email</span>
+                <input
+                  type="email"
+                  name="entry.1301190738"
+                  placeholder="your@email.com"
+                  required
+                />
+              </label>
+
+              <label class="form-field">
+                <span>Description (Optional)</span>
+                <textarea
+                  name="entry.1282145239"
+                  rows="6"
+                  placeholder="What would you like to reach out about?"
+                ></textarea>
+              </label>
+
+              <button class="button button--plain" type="submit">Send Message</button>
+            </form>
+
+            <p class="form-status" id="form-status" hidden>
+              Thanks. Your message was submitted.
+            </p>
+
+            <iframe
+              name="hidden-form-target"
+              title="Hidden form target"
+              class="hidden-frame"
+            ></iframe>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const contactForm = document.getElementById("contact-form");
+      const formStatus = document.getElementById("form-status");
+
+      contactForm.addEventListener("submit", () => {
+        window.setTimeout(() => {
+          contactForm.reset();
+          formStatus.hidden = false;
+        }, 500);
+      });
+    </script>
+  </body>
+</html>
