@@ -6,6 +6,60 @@
     <title>Collaborative Projects | Ava Lopez</title>
     <link rel="stylesheet" href="./styles.css" />
     <style>
+      .deck-modal__panel {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .deck-modal__topbar {
+        flex: 0 0 auto;
+      }
+
+      .deck-modal__frame {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        background: #d9d9d9;
+      }
+
+      #deck-page-canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+        background: #fff;
+      }
+
+      .deck-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.92);
+        border-top: 1px solid var(--line);
+      }
+
+      .deck-controls__status {
+        min-width: 100px;
+        margin: 0;
+        text-align: center;
+        font-family: "Silom", "Monaco", "Menlo", "Courier New", monospace;
+        font-size: 0.78rem;
+      }
+
+      .deck-controls button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .deck-error {
+        margin: 16px;
+        text-align: center;
+      }
+
       @media (max-width: 640px) {
         .deck-modal__panel {
           position: fixed;
@@ -14,29 +68,41 @@
           height: 100vh;
           height: 100dvh;
           margin: 0;
-          padding: 12px;
-          overflow: auto;
+          padding: 10px;
+          overflow: hidden;
         }
 
         .deck-modal__topbar {
-          position: sticky;
-          top: 0;
-          z-index: 2;
           flex-direction: row;
           align-items: center;
-          padding-bottom: 8px;
-          background: var(--paper);
+          justify-content: space-between;
+          gap: 8px;
+          margin-bottom: 8px;
         }
 
-        .deck-modal__frame {
-          height: calc(100vh - 112px);
-          height: calc(100dvh - 112px);
-          min-height: 60vh;
-          -webkit-overflow-scrolling: touch;
-          overflow: auto;
+        .deck-modal__topbar .eyebrow {
+          font-size: 0.68rem;
+        }
+
+        .deck-controls {
+          gap: 6px;
+          padding: 8px 2px;
+        }
+
+        .deck-controls .ui-button {
+          min-height: 36px;
+          padding: 7px 9px;
+          font-size: 0.65rem;
+          letter-spacing: 0.04em;
+        }
+
+        .deck-controls__status {
+          min-width: 70px;
+          font-size: 0.68rem;
         }
       }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   </head>
   <body>
     <div class="site-shell">
@@ -77,10 +143,7 @@
             data-deck-title="Interplay"
             data-deck-src="./assets/source/interplay%201.pdf"
           >
-            <img
-              src="./interplay-preview.jpg"
-              alt="Interplay presentation cover"
-            />
+            <img src="./interplay-preview.jpg" alt="Interplay presentation cover" />
           </a>
           <div class="feature-grid__copy">
             <p class="eyebrow">Design Research • Service Concept</p>
@@ -89,12 +152,7 @@
               Interplay combines research, synthesis, and collaborative concept
               development to imagine better pathways into musical participation.
             </p>
-            <button
-              class="button button--plain"
-              type="button"
-              data-deck-title="Interplay"
-              data-deck-src="./assets/source/interplay%201.pdf"
-            >
+            <button class="button button--plain" type="button" data-deck-title="Interplay" data-deck-src="./assets/source/interplay%201.pdf">
               Widen Deck
             </button>
           </div>
@@ -107,10 +165,7 @@
             data-deck-title="Kodak Analysis"
             data-deck-src="./assets/source/kodak-analysis.pdf"
           >
-            <img
-              src="./assets/source/kodak-preview.png"
-              alt="Kodak analysis cover"
-            />
+            <img src="./assets/source/kodak-preview.png" alt="Kodak analysis cover" />
           </a>
           <div class="feature-grid__copy">
             <p class="eyebrow">Brand Analysis • Research</p>
@@ -119,12 +174,7 @@
               A collaborative brand analysis focused on legacy, visual identity,
               and the relationship between nostalgia and contemporary relevance.
             </p>
-            <button
-              class="button button--plain"
-              type="button"
-              data-deck-title="Kodak Analysis"
-              data-deck-src="./assets/source/kodak-analysis.pdf"
-            >
+            <button class="button button--plain" type="button" data-deck-title="Kodak Analysis" data-deck-src="./assets/source/kodak-analysis.pdf">
               Widen Deck
             </button>
           </div>
@@ -132,53 +182,126 @@
 
         <div class="deck-modal" id="deck-modal" hidden>
           <div class="deck-modal__backdrop" data-close-deck></div>
-          <div class="deck-modal__panel" role="dialog" aria-modal="true" aria-labelledby="deck-modal-title">
+          <section class="deck-modal__panel" role="dialog" aria-modal="true" aria-labelledby="deck-modal-title">
             <div class="deck-modal__topbar">
               <p class="eyebrow" id="deck-modal-title">Deck Viewer</p>
-              <div class="ui-row" style="margin-top: 0">
-                <a
-                  class="ui-button ui-button--link"
-                  id="deck-open-new-tab"
-                  href="#"
-                  target="_blank"
-                  rel="noopener"
-                >Open PDF</a>
-                <button class="ui-button button--plain" type="button" data-close-deck>
-                  Close
-                </button>
-              </div>
+              <button class="ui-button button--plain" type="button" data-close-deck>Close</button>
             </div>
-            <div class="deck-modal__frame">
-              <iframe
-                id="deck-modal-frame"
-                title="Project deck viewer"
-                loading="lazy"
-              ></iframe>
+            <div class="deck-modal__frame" id="deck-viewer">
+              <canvas id="deck-page-canvas" aria-label="Presentation slide"></canvas>
+              <p class="deck-error" id="deck-error" hidden></p>
             </div>
-          </div>
+            <nav class="deck-controls" aria-label="Slide navigation">
+              <button class="ui-button" id="deck-prev" type="button">Previous</button>
+              <p class="deck-controls__status" id="deck-page-status" aria-live="polite">Slide —</p>
+              <button class="ui-button" id="deck-next" type="button">Next</button>
+            </nav>
+          </section>
         </div>
       </main>
     </div>
 
     <script>
       const deckModal = document.getElementById("deck-modal");
-      const deckFrame = document.getElementById("deck-modal-frame");
       const deckTitle = document.getElementById("deck-modal-title");
-      const deckOpenNewTab = document.getElementById("deck-open-new-tab");
+      const deckViewer = document.getElementById("deck-viewer");
+      const deckCanvas = document.getElementById("deck-page-canvas");
+      const deckError = document.getElementById("deck-error");
+      const deckStatus = document.getElementById("deck-page-status");
+      const prevButton = document.getElementById("deck-prev");
+      const nextButton = document.getElementById("deck-next");
       const deckTriggers = document.querySelectorAll("[data-deck-src]");
       const deckClosers = document.querySelectorAll("[data-close-deck]");
 
-      const openDeck = (title, src) => {
+      let pdfDocument = null;
+      let currentPage = 1;
+      let renderTask = null;
+      let loadToken = 0;
+
+      if (window.pdfjsLib) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+          "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+      }
+
+      const renderPage = async () => {
+        if (!pdfDocument) return;
+        if (renderTask) {
+          renderTask.cancel();
+          renderTask = null;
+        }
+
+        const page = await pdfDocument.getPage(currentPage);
+        const availableWidth = Math.max(240, deckViewer.clientWidth - 16);
+        const baseViewport = page.getViewport({ scale: 1 });
+        const fitScale = availableWidth / baseViewport.width;
+        const viewport = page.getViewport({ scale: fitScale });
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        const context = deckCanvas.getContext("2d");
+
+        deckCanvas.width = Math.floor(viewport.width * pixelRatio);
+        deckCanvas.height = Math.floor(viewport.height * pixelRatio);
+        deckCanvas.style.width = `${Math.floor(viewport.width)}px`;
+        deckCanvas.style.height = `${Math.floor(viewport.height)}px`;
+
+        renderTask = page.render({
+          canvasContext: context,
+          viewport,
+          transform: pixelRatio === 1 ? null : [pixelRatio, 0, 0, pixelRatio, 0, 0],
+        });
+
+        try {
+          await renderTask.promise;
+        } catch (error) {
+          if (error.name !== "RenderingCancelledException") throw error;
+        }
+
+        deckStatus.textContent = `Slide ${currentPage} of ${pdfDocument.numPages}`;
+        prevButton.disabled = currentPage <= 1;
+        nextButton.disabled = currentPage >= pdfDocument.numPages;
+        deckViewer.scrollTop = 0;
+      };
+
+      const openDeck = async (title, src) => {
+        const token = ++loadToken;
         deckTitle.textContent = title;
-        deckOpenNewTab.href = src;
-        deckFrame.src = src + "#toolbar=1&navpanes=0";
+        deckError.hidden = true;
+        deckError.textContent = "";
+        deckStatus.textContent = "Loading slides…";
+        prevButton.disabled = true;
+        nextButton.disabled = true;
         deckModal.hidden = false;
         document.body.classList.add("modal-open");
+        deckViewer.scrollTop = 0;
+
+        if (!window.pdfjsLib) {
+          deckError.textContent = "The slide viewer could not load. Check your connection and try again.";
+          deckError.hidden = false;
+          deckStatus.textContent = "Viewer unavailable";
+          return;
+        }
+
+        try {
+          pdfDocument = await pdfjsLib.getDocument(src).promise;
+          if (token !== loadToken) return;
+          currentPage = 1;
+          await renderPage();
+        } catch (error) {
+          if (token !== loadToken) return;
+          deckStatus.textContent = "Could not load slides";
+          deckError.textContent = "The presentation could not be loaded. Please try again in a moment.";
+          deckError.hidden = false;
+          console.error("Could not load presentation PDF:", error);
+        }
       };
 
       const closeDeck = () => {
+        loadToken += 1;
         deckModal.hidden = true;
-        deckFrame.removeAttribute("src");
+        pdfDocument = null;
+        if (renderTask) {
+          renderTask.cancel();
+          renderTask = null;
+        }
         document.body.classList.remove("modal-open");
       };
 
@@ -189,13 +312,34 @@
         });
       });
 
-      deckClosers.forEach((closer) => {
-        closer.addEventListener("click", closeDeck);
+      prevButton.addEventListener("click", () => {
+        if (pdfDocument && currentPage > 1) {
+          currentPage -= 1;
+          renderPage();
+        }
       });
 
+      nextButton.addEventListener("click", () => {
+        if (pdfDocument && currentPage < pdfDocument.numPages) {
+          currentPage += 1;
+          renderPage();
+        }
+      });
+
+      deckClosers.forEach((closer) => closer.addEventListener("click", closeDeck));
+      window.addEventListener("resize", () => {
+        if (!deckModal.hidden && pdfDocument) renderPage();
+      });
       document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && !deckModal.hidden) {
-          closeDeck();
+        if (deckModal.hidden) return;
+        if (event.key === "Escape") closeDeck();
+        if (event.key === "ArrowLeft" && pdfDocument && currentPage > 1) {
+          currentPage -= 1;
+          renderPage();
+        }
+        if (event.key === "ArrowRight" && pdfDocument && currentPage < pdfDocument.numPages) {
+          currentPage += 1;
+          renderPage();
         }
       });
     </script>
