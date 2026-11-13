@@ -5,6 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Collaborative Projects | Ava Lopez</title>
     <link rel="stylesheet" href="./styles.css" />
+    <style>
+      @media (max-width: 640px) {
+        .deck-modal__panel {
+          position: fixed;
+          inset: 0;
+          width: 100%;
+          height: 100vh;
+          height: 100dvh;
+          margin: 0;
+          padding: 12px;
+          overflow: auto;
+        }
+
+        .deck-modal__topbar {
+          position: sticky;
+          top: 0;
+          z-index: 2;
+          flex-direction: row;
+          align-items: center;
+          padding-bottom: 8px;
+          background: var(--paper);
+        }
+
+        .deck-modal__frame {
+          height: calc(100vh - 112px);
+          height: calc(100dvh - 112px);
+          min-height: 60vh;
+          -webkit-overflow-scrolling: touch;
+          overflow: auto;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="site-shell">
@@ -103,9 +135,18 @@
           <div class="deck-modal__panel" role="dialog" aria-modal="true" aria-labelledby="deck-modal-title">
             <div class="deck-modal__topbar">
               <p class="eyebrow" id="deck-modal-title">Deck Viewer</p>
-              <button class="ui-button button--plain" type="button" data-close-deck>
-                Close
-              </button>
+              <div class="ui-row" style="margin-top: 0">
+                <a
+                  class="ui-button ui-button--link"
+                  id="deck-open-new-tab"
+                  href="#"
+                  target="_blank"
+                  rel="noopener"
+                >Open PDF</a>
+                <button class="ui-button button--plain" type="button" data-close-deck>
+                  Close
+                </button>
+              </div>
             </div>
             <div class="deck-modal__frame">
               <iframe
@@ -123,11 +164,13 @@
       const deckModal = document.getElementById("deck-modal");
       const deckFrame = document.getElementById("deck-modal-frame");
       const deckTitle = document.getElementById("deck-modal-title");
+      const deckOpenNewTab = document.getElementById("deck-open-new-tab");
       const deckTriggers = document.querySelectorAll("[data-deck-src]");
       const deckClosers = document.querySelectorAll("[data-close-deck]");
 
       const openDeck = (title, src) => {
         deckTitle.textContent = title;
+        deckOpenNewTab.href = src;
         deckFrame.src = src + "#toolbar=1&navpanes=0";
         deckModal.hidden = false;
         document.body.classList.add("modal-open");
