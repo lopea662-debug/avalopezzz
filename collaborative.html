@@ -41,12 +41,12 @@
         <article class="feature-grid">
           <a
             class="feature-grid__image feature-grid__image--wide feature-grid__link"
-            href="./assets/source/interplay.pdf"
+            href="./interplay-preview.jpg"
             data-deck-title="Interplay"
-            data-deck-src="./assets/source/interplay.pdf"
+            data-deck-src="./interplay-preview.jpg"
           >
             <img
-              src="./assets/source/Design Research.key/preview.jpg"
+              src="./interplay-preview.jpg"
               alt="Interplay presentation cover"
             />
           </a>
@@ -61,9 +61,9 @@
               class="button button--plain"
               type="button"
               data-deck-title="Interplay"
-              data-deck-src="./assets/source/interplay.pdf"
+              data-deck-src="./interplay-preview.jpg"
             >
-              Widen Deck
+              Widen Preview
             </button>
           </div>
         </article>
@@ -127,11 +127,11 @@
       const deckClosers = document.querySelectorAll("[data-close-deck]");
 
       const openDeck = (title, src) => {
-  deckTitle.textContent = title;
-  deckFrame.src = src + "#toolbar=1&navpanes=0";
-  deckModal.hidden = false;
-  document.body.classList.add("modal-open");
-};
+        deckTitle.textContent = title;
+        deckFrame.src = src + "#toolbar=1&navpanes=0";
+        deckModal.hidden = false;
+        document.body.classList.add("modal-open");
+      };
 
       const closeDeck = () => {
         deckModal.hidden = true;
