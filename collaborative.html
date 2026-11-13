@@ -127,11 +127,11 @@
       const deckClosers = document.querySelectorAll("[data-close-deck]");
 
       const openDeck = (title, src) => {
-        deckTitle.textContent = title;
-        deckFrame.src = src;
-        deckModal.hidden = false;
-        document.body.classList.add("modal-open");
-      };
+  deckTitle.textContent = title;
+  deckFrame.src = src + "#toolbar=1&navpanes=0";
+  deckModal.hidden = false;
+  document.body.classList.add("modal-open");
+};
 
       const closeDeck = () => {
         deckModal.hidden = true;
